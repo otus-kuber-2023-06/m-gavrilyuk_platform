@@ -1,0 +1,10 @@
+apiVersion: metallb.io/v1alpha1
+kind: IPAddressPool
+metadata:
+  namespace: metallb-system
+  name: metallb-pool
+spec:
+  protocol: layer2
+  addresses:
+  - 203.0.113.1-203.0.113.10
+  - 203.0.113.65-203.0.113.75

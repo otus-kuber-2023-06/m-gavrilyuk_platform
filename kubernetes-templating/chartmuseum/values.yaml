@@ -1,0 +1,22 @@
+ingress:
+  enabled: true
+  annotations:
+    kubernetes.io/ingress.class: traefik
+    cert-manager.io/cluster-issuer: letsencrypt
+    kubernetes.io/tls-acme: "true"
+  hosts:
+    - name: museum-62.84.112.166.nip.io
+      path: /
+  tls:
+      - secretName: chartmuseum-tls-tooling
+        hosts:
+          - museum-62.84.112.166.nip.io
+
+env:
+  open:
+    DEBUG: "true"
+    DISABLE_API: "false"
+    STORAGE: "local"
+    STORAGE_LOCAL_ROOTDIR: "/charts"
+    BASIC_AUTH_USER: admin
+    BASIC_AUTH_PASS: admin
