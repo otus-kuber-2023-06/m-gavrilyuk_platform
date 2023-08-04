@@ -18,3 +18,7 @@ helm install my-chartmuseum chartmuseum/chartmuseum --version 3.1.0
 ```
 
 ![img_1.png](img_1.png)
+
+#kubernetes-operators
+
+![img_2.png](kubernetes-operators/img_2.png)
