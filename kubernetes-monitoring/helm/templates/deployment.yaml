@@ -1,0 +1,44 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Chart.Name }}
+  labels:
+    app: {{ .Chart.Name }}
+spec:
+  revisionHistoryLimit: {{ .Values.HistoryLimit }}
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      app: {{ .Chart.Name }}
+  template:
+    metadata:
+      labels:
+        app: {{ .Chart.Name }}
+    spec:
+      containers:
+      - name: {{ .Chart.Name }}
+        image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+        imagePullPolicy: {{ .Values.image.pullPolicy }}
+        ports:
+        - containerPort: 80
+          name: 80tcp
+          protocol: TCP
+        resources:
+          {{- toYaml .Values.resources  | nindent 10 }}
+        readinessProbe:
+          httpGet:
+            scheme: HTTP
+            path: /basic_status
+            port: 80
+          initialDelaySeconds: 10
+          periodSeconds: 5
+      - name: metrics
+        image: nginx/nginx-prometheus-exporter:0.10.0
+        imagePullPolicy: {{ .Values.image.pullPolicy }}
+        ports:
+        - containerPort: 9113
+          name: metrics
+          protocol: TCP
+        resources:
+          {{- toYaml .Values.resources  | nindent 10 }}
+        args: ["-nginx.scrape-uri=http://localhost/basic_status"]

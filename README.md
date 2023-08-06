@@ -18,3 +18,13 @@ helm install my-chartmuseum chartmuseum/chartmuseum --version 3.1.0
 ```
 
 ![img_1.png](img_1.png)
+
+
+# kubernetes-monitoring
+
+[base_status](https://nginx-metrics.158.160.55.185.sslip.io/basic_status/)
+
+[metrics](https://nginx-metrics.158.160.55.185.sslip.io/metrics)
+
+[prometheus](https://prometheus.158.160.55.185.sslip.io/graph?g0.expr=nginx_connections_accepted&g0.tab=1&g0.stacked=0&g0.show_exemplars=0&g0.range_input=1h)
+
