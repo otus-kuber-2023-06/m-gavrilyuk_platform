@@ -1,0 +1,29 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  annotations:
+    cert-manager.io/cluster-issuer: letsencrypt-prod
+  name: prometheus
+spec:
+  rules:
+  - host: prometheus.158.160.55.185.sslip.io
+    http:
+      paths:
+      - backend:
+          service:
+            name: prometheus-operated
+            port:
+              number: 9090
+        path: /
+        pathType: Prefix
+      - backend:
+          service:
+            name: prometheus-operator
+            port:
+              number: 8080
+        path: /metrics
+        pathType: Prefix
+  tls:
+  - hosts:
+    - prometheus.158.160.55.185.sslip.io
+    secretName: prometheus-tls
