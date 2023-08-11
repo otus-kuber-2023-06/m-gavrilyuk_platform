@@ -1,0 +1,24 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  annotations:
+    cert-manager.io/cluster-issuer: letsencrypt-prod
+  name: elasticsearch
+  namespace: observability
+spec:
+  ingressClassName: traefik
+  rules:
+  - host: kibana.158.160.55.185.sslip.io
+    http:
+      paths:
+      - backend:
+          service:
+            name: elastic-kibana
+            port:
+              number: 5601
+        path: /
+        pathType: Prefix
+  tls:
+  - hosts:
+    - kibana.158.160.55.185.sslip.io
+    secretName: elastic-kibana-ingress-tls
